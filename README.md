@@ -1,10 +1,18 @@
-# Project Name
+---
+services: cosmos-db, xamarin
+platforms: xamarin.forms, xamarin.iOS, xamarin.android, dotnet
+author: masoucou
+---
 
-(short, 1-3 sentenced, description of the project)
+# Azure Cosmos DB - MongoDB API with Xamarin Quick Start
+
+Learn how to use Azure Cosmos DB with its MongoDB API in a fully MVVM-enabled Xamarin.Forms application!
+
+![Bit Dev Advocate Learning Cartoon Image](./art/Bit_Learning.png)
 
 ## Features
 
-This project framework provides the following features:
+This project demonstrates the following features:
 
 * Feature 1
 * Feature 2
