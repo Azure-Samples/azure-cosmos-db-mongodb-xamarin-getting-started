@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+    x:Class="TaskList.Core.TaskDetailPage"
+    Title="{Binding Title}"
+    ios:Page.UseSafeArea="true">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <TableView Intent="Form">
+            <TableRoot>
+                <TableSection Title="Basic Info">
+                    <EntryCell Label="Name" Text="{Binding TheTask.Name}" />
+                    <EntryCell Label="Category" Text="{Binding TheTask.Category}" />
+                </TableSection>
+                <TableSection Title="Misc">
+                    <SwitchCell Text="Completed" On="{Binding TheTask.Complete}" />
+                    <ViewCell>
+                        <StackLayout Orientation="Horizontal" Margin="15,5">
+                           <Label Text="Due Date" />
+                           <DatePicker Date="{Binding TheTask.DueDate}" Margin="15,0" /> 
+                        </StackLayout>
+                    </ViewCell>
+                </TableSection>
+            </TableRoot>
+        </TableView>
+    </ContentPage.Content>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Cancel" Clicked="Handle_CancelClicked" />
+        <ToolbarItem Text="Save" Command="{Binding SaveCommand}" />
+    </ContentPage.ToolbarItems>
+</ContentPage>
