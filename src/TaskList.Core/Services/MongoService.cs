@@ -27,7 +27,7 @@ namespace TaskList.Core
             );
 
             settings.SslSettings =
-              new SslSettings() { EnabledSslProtocols = SslProtocols.Tls12 };
+            new SslSettings() { EnabledSslProtocols = SslProtocols.Tls12 };
 
             // Initialize the client
             var mongoClient = new MongoClient(settings);
@@ -45,11 +45,19 @@ namespace TaskList.Core
         {
             Init();
 
-            var allTasks = await tasksCollection
-                .Find(new BsonDocument())
-                .ToListAsync();
+            try
+            {
+                var allTasks = await tasksCollection
+                    .Find(new BsonDocument())
+                    .ToListAsync();
 
-            return allTasks;
+                return allTasks;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            return null;
         }
 
         public async Task<List<MyTask>> GetIncompleteTasks()
