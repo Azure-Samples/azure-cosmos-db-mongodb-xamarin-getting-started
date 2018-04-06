@@ -1,6 +1,6 @@
 ---
 services: cosmos-db, xamarin
-platforms: xamarin.forms, xamarin.iOS, xamarin.android, dotnet
+platforms: xamarin.forms, dotnet
 author: masoucou
 ---
 
@@ -10,56 +10,34 @@ Learn how to use Azure Cosmos DB with its MongoDB API in a fully MVVM-enabled Xa
 
 ![Bit Dev Advocate Learning Cartoon Image](./art/Bit_Learning.png)
 
-## Features
+## Concepts
 
-This project demonstrates the following features:
+This quick start demonstrates the following concepts:
 
-* Feature 1
-* Feature 2
-* ...
+* How to create and configure an Azure Cosmos DB MongoDB database
+* How to connect a Xamarin.Forms app to that database
+* How to structure a Xamarin.Forms app with the MVVM pattern
+* How to insert, update, and delete records from the Xamarin.Forms app into the Azure Cosmos DB MongoDB database
+* How to read and query records from the Azure Cosmos DB MongoDB database within a Xamarin.Forms app
 
-## Getting Started
+## The Overview
+
+We're going to build a simple todo app using the Azure Cosmos DB MongoDB API. Azure Cosmos DB is a multi-model database - that means it supports several different types of underlying database APIs, like MongoDB or Gremlin or DocumentDB. In this quick start I'm going to show you how to use the MongoDB API within the context of a Xamarin.Forms mobile app. You'll see both how to access the database to read and write data and also how to architect an app using the MVVM design pattern.
 
 ### Prerequisites
 
-(ideally very short, if any)
+You will need the following in order to run the quick start.
 
-- OS
-- Library version
-- ...
+* An active Azure subscription
+* Visual Studio with the Mobile Development Workload installed (or Visual Studio for Mac)
 
-### Installation
+That's it! So let's get started by creating a new Azure Cosmos DB account - then we'll download the app and start messing around with the todo items!
 
-(ideally very short)
-
-- npm install [package name]
-- mvn install
-- ...
-
-### Quickstart
-(Add steps to get up and running quickly)
-
-1. git clone [repository clone url]
-2. cd [respository name]
-3. ...
-
-
-## Demo
-
-A demo app is included to show how to use the project.
-
-To run the demo, follow these steps:
-
-(Add steps to start up the demo)
-
-1.
-2.
-3.
+## Creating an Azure Cosmos DB MongoDB Database
 
 ## Resources
 
-(Any additional resources or related projects)
-
-- Link to supporting information
-- Link to similar sample
-- ...
+* Azure Cosmos DB
+* Xamarin.Forms
+* Azure Cosmos DB MongoDB API Reference
+* Creating a MongoDB database
