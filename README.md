@@ -1,7 +1,7 @@
 ---
 services: cosmos-db, xamarin
 platforms: xamarin.forms, dotnet
-author: masoucou
+author: codemillmatt
 ---
 
 # Azure Cosmos DB - MongoDB API with Xamarin Quick Start
