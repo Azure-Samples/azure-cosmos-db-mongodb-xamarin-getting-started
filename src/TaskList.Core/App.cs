@@ -8,7 +8,11 @@ namespace TaskList.Core
     {
         public App()
         {
-            MainPage = new NavigationPage(new TaskListPage());
+            var tabs = new TabbedPage();
+            tabs.Children.Add(new NavigationPage(new TaskListPage()) { Title = "Tasks" });
+            tabs.Children.Add(new NavigationPage(new SearchTaskListPage()) { Title = "Search" });
+
+            MainPage = tabs;
         }
     }
 }

@@ -11,43 +11,45 @@ namespace TaskList.Core
 {
     public class MongoService
     {
-        IMongoCollection<MyTask> tasksCollection;
-
         string dbName = "MyTasks";
         string collectionName = "TaskList";
 
-        void Init()
+        IMongoCollection<MyTask> tasksCollection;
+        IMongoCollection<MyTask> TasksCollection
         {
-            if (tasksCollection != null)
-                return;
+            get
+            {
+                if (tasksCollection == null)
+                {
+                    // APIKeys.Connection string is found in the portal under the "Connection String" blade
+                    MongoClientSettings settings = MongoClientSettings.FromUrl(
+                      new MongoUrl(APIKeys.ConnectionString)
+                    );
 
-            // APIKeys.Connection string is found in the portal under the "Connection String" blade
-            MongoClientSettings settings = MongoClientSettings.FromUrl(
-              new MongoUrl(APIKeys.ConnectionString)
-            );
+                    settings.SslSettings =
+                        new SslSettings() { EnabledSslProtocols = SslProtocols.Tls12 };
 
-            settings.SslSettings =
-            new SslSettings() { EnabledSslProtocols = SslProtocols.Tls12 };
+                    // Initialize the client
+                    var mongoClient = new MongoClient(settings);
 
-            // Initialize the client
-            var mongoClient = new MongoClient(settings);
+                    // This will create or get the database
+                    var db = mongoClient.GetDatabase(dbName);
 
-            // This will create or get the database
-            var db = mongoClient.GetDatabase(dbName);
-
-            // This will create or get the collection
-            tasksCollection = db.GetCollection<MyTask>(collectionName);
+                    // This will create or get the collection
+                    var collectionSettings = new MongoCollectionSettings { ReadPreference = ReadPreference.Nearest };
+                    tasksCollection = db.GetCollection<MyTask>(collectionName, collectionSettings);
+                }
+                return tasksCollection;
+            }
         }
 
         #region Get Functions
 
         public async Task<List<MyTask>> GetAllTasks()
         {
-            Init();
-
             try
             {
-                var allTasks = await tasksCollection
+                var allTasks = await TasksCollection
                     .Find(new BsonDocument())
                     .ToListAsync();
 
@@ -62,9 +64,7 @@ namespace TaskList.Core
 
         public async Task<List<MyTask>> GetIncompleteTasks()
         {
-            Init();
-
-            var incompleteTasks = await tasksCollection
+            var incompleteTasks = await TasksCollection
                 .Find(mt => mt.Complete == false)
                 .ToListAsync();
 
@@ -73,9 +73,7 @@ namespace TaskList.Core
 
         public async Task<MyTask> GetTaskById(Guid taskId)
         {
-            Init();
-
-            var singleTask = await tasksCollection
+            var singleTask = await TasksCollection
                 .Find(f => f.Id.Equals(taskId))
                 .FirstOrDefaultAsync();
 
@@ -84,27 +82,36 @@ namespace TaskList.Core
 
         #endregion
 
+        #region Search Functions
+
+        public async Task<List<MyTask>> GetIncompleteTasksDueBefore(DateTime date)
+        {
+            var tasks = await TasksCollection
+                            .AsQueryable()
+                            .Where(t => t.Complete == false)
+                            .Where(t => t.DueDate < date)
+                            .ToListAsync();
+
+            return tasks;
+        }
+
+        #endregion
+
         #region Save/Delete Functions
 
         public async Task CreateTask(MyTask task)
         {
-            Init();
-
-            await tasksCollection.InsertOneAsync(task);
+            await TasksCollection.InsertOneAsync(task);
         }
 
         public async Task UpdateTask(MyTask task)
         {
-            Init();
-
-            await tasksCollection.ReplaceOneAsync(t => t.Id.Equals(task.Id), task);
+            await TasksCollection.ReplaceOneAsync(t => t.Id.Equals(task.Id), task);
         }
 
         public async Task DeleteTask(MyTask task)
         {
-            Init();
-
-            await tasksCollection.DeleteOneAsync(t => t.Id.Equals(task.Id));
+            await TasksCollection.DeleteOneAsync(t => t.Id.Equals(task.Id));
         }
 
         #endregion

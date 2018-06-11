@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+    x:Class="TaskList.Core.SearchTaskListPage"
+    ios:Page.UseSafeArea="true"
+    Title="{Binding Title}">
+    <ContentPage.Content>
+       <StackLayout>
+            <ActivityIndicator IsRunning="{Binding IsBusy}" />
+            <StackLayout Orientation="Horizontal" Margin="15">
+                <Label VerticalTextAlignment="Center">Get Tasks Due Before:</Label>
+                <DatePicker DateSelected="Handle_DateSelected" Date="{Binding CutoffDate}" HorizontalOptions="EndAndExpand" />
+            </StackLayout>
+            <BoxView Color="Gray" HeightRequest="2" />
+            <ListView ItemsSource="{Binding MyTasks}" x:Name="myTasksList">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding Name}" Detail="{Binding Category}">                            
+                        </TextCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>  
+    </ContentPage.Content>
+</ContentPage>
