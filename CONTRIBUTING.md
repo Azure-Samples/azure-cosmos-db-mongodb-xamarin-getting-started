@@ -1,4 +1,4 @@
-# Contributing to Azure Cosmos DB - MongoDB API with Xamarin Quick Start
+# Contributing to Azure Cosmos DB for MongoDB API with Xamarin Quick Start
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
 Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
