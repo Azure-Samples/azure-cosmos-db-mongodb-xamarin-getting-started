@@ -5,23 +5,51 @@
     xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
     x:Class="TaskList.Core.SearchTaskListPage"
     ios:Page.UseSafeArea="true"
-    Title="{Binding Title}">
+    Title="{Binding Title}"
+    Visual="Material">
     <ContentPage.Content>
-       <StackLayout>
-            <ActivityIndicator IsRunning="{Binding IsBusy}" />
+        <StackLayout>
             <StackLayout Orientation="Horizontal" Margin="15">
                 <Label VerticalTextAlignment="Center">Get Tasks Due Before:</Label>
                 <DatePicker DateSelected="Handle_DateSelected" Date="{Binding CutoffDate}" HorizontalOptions="EndAndExpand" />
             </StackLayout>
             <BoxView Color="Gray" HeightRequest="2" />
-            <ListView ItemsSource="{Binding MyTasks}" x:Name="myTasksList">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextCell Text="{Binding Name}" Detail="{Binding Category}">                            
-                        </TextCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+
+            <RefreshView IsRefreshing="{Binding IsRefreshing}" Command="{Binding RefreshCommand}">
+                <CollectionView ItemsSource="{Binding MyTasks}">
+                    <CollectionView.EmptyView>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Row="0"
+                                   Margin="0,50,0,0"
+                                   HorizontalOptions="Center"                                   
+                                   FontSize="Large"
+                                   TextColor="Black"
+                                   Text="No results found" />
+                            <Label Grid.Row="1"
+                                HorizontalOptions="Center" 
+                                Text="Either pull to refresh or set new date or both!" />
+                        </Grid>
+                    </CollectionView.EmptyView>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Padding="10,0,10,5">
+                                <Frame HasShadow="True">
+                                    <StackLayout>
+                                        <Label Text="{Binding Name, StringFormat='Task Name: {0}'}" FontSize="Medium" FontAttributes="Bold" />
+                                        <Label Text="{Binding Category, StringFormat='Category: {0}'}" />
+                                        <Label Text="{Binding DueDate, StringFormat='Due Date: {0}'}"/>
+                                    </StackLayout>
+                                </Frame>
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </RefreshView>
+
         </StackLayout>  
     </ContentPage.Content>
 </ContentPage>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using MongoDB.Bson.IO;
 using Xamarin.Forms;
 
 namespace TaskList.Core
@@ -11,15 +12,33 @@ namespace TaskList.Core
         List<MyTask> myTasks;
         public List<MyTask> MyTasks { get => myTasks; set => SetProperty(ref myTasks, value); }
 
-        DateTime cutoffDate;
-        public DateTime CutoffDate { get => cutoffDate; set => SetProperty(ref cutoffDate, value); }
+        DateTime cutoffDate = DateTime.Now.AddDays(14);
+        public DateTime CutoffDate
+        {
+            get => cutoffDate;
+            set
+            {
+                SetProperty(ref cutoffDate, value, () => { 
+                    if (OkToRefresh)
+                        IsRefreshing = true; 
+                }); 
+            }
+        }
 
         public ICommand RefreshCommand { get; }
+
+        bool isRefreshing;
+        public bool IsRefreshing { get => isRefreshing; set => SetProperty(ref isRefreshing, value); }
+
+        bool okToRefresh;
+        public bool OkToRefresh { get => okToRefresh; set => SetProperty(ref okToRefresh, value); }
 
         public SearchTaskListViewModel()
         {
             MyTasks = new List<MyTask>();
             IsBusy = false;
+
+            Title = "Search Tasks";
 
             RefreshCommand = new Command(async () => await ExecuteRefreshCommand());
         }
@@ -39,6 +58,7 @@ namespace TaskList.Core
             finally
             {
                 IsBusy = false;
+                IsRefreshing = false;
             }
         }
     }

@@ -6,24 +6,36 @@
     x:Class="TaskList.Core.TaskListPage"
     Title="{Binding Title}"
     ios:Page.UseSafeArea="true"
-    x:Name="MyTasksPage">
+    x:Name="MyTasksPage"
+    Visual="Material">
     <ContentPage.Content>
-       <StackLayout>
-            <ActivityIndicator IsRunning="{Binding IsBusy}" />
-
-            <ListView ItemsSource="{Binding MyTasks}" x:Name="myTasksList">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextCell Text="{Binding Name}" Detail="{Binding Category}">
-                            <TextCell.ContextActions>
-                                <MenuItem Text="Delete" IsDestructive="true"
-                                          Command="{Binding Path=BindingContext.DeleteCommand, Source={x:Reference Name=MyTasksPage}}"
-                                          CommandParameter="{Binding .}" />
-                            </TextCell.ContextActions>
-                        </TextCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+        <StackLayout>
+            <RefreshView IsRefreshing="{Binding IsRefreshing}" Command="{Binding RefreshCommand}">
+                <CollectionView ItemsSource="{Binding MyTasks}">
+                    <CollectionView.EmptyViewTemplate>
+                        <DataTemplate>
+                            <StackLayout>
+                                <Label HorizontalOptions="Center" VerticalOptions="CenterAndExpand"
+                                    FontSize="Large"
+                                    TextColor="Black"
+                                    Text="Hit the add button to add some data" />
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.EmptyViewTemplate>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Padding="10,0,10,5">
+                                <Frame HasShadow="True">
+                                    <StackLayout>
+                                        <Label Text="{Binding Name, StringFormat='Task Name: {0}'}" FontSize="Medium" FontAttributes="Bold" />
+                                        <Label Text="{Binding Category, StringFormat='Category: {0}'}" />
+                                    </StackLayout>
+                                </Frame>
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </RefreshView>
 
         </StackLayout> 
     </ContentPage.Content>

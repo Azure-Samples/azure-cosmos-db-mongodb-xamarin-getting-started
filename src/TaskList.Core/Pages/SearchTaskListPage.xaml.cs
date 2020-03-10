@@ -13,12 +13,10 @@ namespace TaskList.Core
         {
             InitializeComponent();
 
-            viewModel = new SearchTaskListViewModel();
-            viewModel.CutoffDate = DateTime.Now.AddDays(14);
+            viewModel = new SearchTaskListViewModel();            
 
             BindingContext = viewModel;
-
-            myTasksList.ItemTapped += (sender, e) => myTasksList.SelectedItem = null;
+           
             Title = "Search For Due Tasks";
         }
 
@@ -26,12 +24,20 @@ namespace TaskList.Core
         {
             base.OnAppearing();
 
-            viewModel.RefreshCommand.Execute(null);
+            viewModel.OkToRefresh = true;
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+
+            viewModel.OkToRefresh = false;
         }
 
         void Handle_DateSelected(object sender, Xamarin.Forms.DateChangedEventArgs e)
         {
-            viewModel?.RefreshCommand.Execute(null);
+            //if (viewModel != null)
+            //    viewModel.IsRefreshing = true;
         }
     }
 }
