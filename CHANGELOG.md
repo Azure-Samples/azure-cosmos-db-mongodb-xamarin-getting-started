@@ -1,6 +1,18 @@
-# Azure Cosmos DB - MongoDB API with Xamarin Quick Start Changelog
+# Azure Cosmos DB for MongoDB API with Xamarin Quick Start Changelog
 
-<a name="1.0.0"></a>
+<a name="1.0.1"></a>
+
+# 1.0.1 - Updating the Azure Cosmos DB product reference
+
+*Features*
+* No additional features
+
+*Bug Fixes*
+* Brand new - no bugs here yet!
+
+*Breaking Changes*
+* Brand new - nothing to break!
+
 
 # 1.0.0 - The App Releases
 
