@@ -1,7 +1,11 @@
 ---
-services: cosmos-db, xamarin
-platforms: xamarin.forms, dotnet
-author: codemillmatt
+page_type: sample
+languages:
+- csharp
+products:
+- azure
+description: "Learn how to use Azure Cosmos DB with the MongoDB .NET API in a fully MVVM-enabled Xamarin.Forms application!"
+urlFragment: azure-cosmos-db-mongodb-xamarin-getting-started
 ---
 
 # Azure Cosmos DB for MongoDB API with Xamarin Quick Start
