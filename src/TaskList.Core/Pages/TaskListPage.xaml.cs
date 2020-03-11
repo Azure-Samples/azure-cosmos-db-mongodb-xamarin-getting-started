@@ -15,8 +15,8 @@ namespace TaskList.Core
             viewModel = new TaskListViewModel();
             BindingContext = viewModel;
 
-            myTasksList.ItemSelected += MyTasksList_ItemSelected;
-            myTasksList.ItemTapped += (sender, args) => myTasksList.SelectedItem = null;
+            //myTasksList.ItemSelected += MyTasksList_ItemSelected;
+            //myTasksList.ItemTapped += (sender, args) => myTasksList.SelectedItem = null;
 
             viewModel.Title = "My Tasks";
         }
@@ -25,7 +25,7 @@ namespace TaskList.Core
         {
             base.OnAppearing();
 
-            viewModel.RefreshCommand.Execute(null);
+            viewModel.IsRefreshing = true;
         }
 
         protected async void AddNewClicked(object sender, EventArgs e)

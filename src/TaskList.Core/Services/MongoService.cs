@@ -21,13 +21,17 @@ namespace TaskList.Core
             {
                 if (tasksCollection == null)
                 {
+                    var mongoUrl = new MongoUrl(APIKeys.ConnectionString);
+
                     // APIKeys.Connection string is found in the portal under the "Connection String" blade
                     MongoClientSettings settings = MongoClientSettings.FromUrl(
-                      new MongoUrl(APIKeys.ConnectionString)
+                      mongoUrl
                     );
 
                     settings.SslSettings =
                         new SslSettings() { EnabledSslProtocols = SslProtocols.Tls12 };
+
+                    settings.RetryWrites = false;
 
                     // Initialize the client
                     var mongoClient = new MongoClient(settings);

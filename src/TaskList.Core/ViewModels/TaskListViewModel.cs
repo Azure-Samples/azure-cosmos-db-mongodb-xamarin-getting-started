@@ -8,6 +8,9 @@ namespace TaskList.Core
 {
     public class TaskListViewModel : BaseViewModel
     {
+        bool isRefreshing;
+        public bool IsRefreshing { get => isRefreshing; set => SetProperty(ref isRefreshing, value); }
+
         List<MyTask> myTasks;
         public List<MyTask> MyTasks { get => myTasks; set => SetProperty(ref myTasks, value); }
 
@@ -58,6 +61,7 @@ namespace TaskList.Core
             finally
             {
                 IsBusy = false;
+                IsRefreshing = false;
             }
         }
     }
